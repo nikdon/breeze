@@ -6,6 +6,7 @@ import breeze.linalg._
 import breeze.linalg.svd.{DenseSVD, SVD}
 import breeze.numerics.{abs, signum}
 import breeze.stats.distributions.Rand
+import spire.implicits.cfor
 
 
 /**
@@ -88,7 +89,9 @@ object svdr extends UFunc {
                                     nIter: Int): DenseMatrix[Double] = {
     val R = DenseMatrix.rand(M.cols, size, rand = Rand.gaussian)
     val Y = M * R
-    for (a <- 0 until nIter) Y := M * (M.t * Y)
+    cfor(0)(_ < nIter, _ + 1) { _ =>
+      Y := M * (M.t * Y)
+    }
     val q = qr.reduced.justQ(Y)
     q
   }
