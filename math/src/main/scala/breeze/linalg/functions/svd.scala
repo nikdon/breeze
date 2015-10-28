@@ -7,7 +7,7 @@ import org.netlib.util.intW
 import org.netlib.util.doubleW
 import breeze.linalg.operators.OpMulMatrix
 import breeze.linalg.support.CanTranspose
-import spire.implicits.cfor
+import spire.implicits.cforRange
 
 
 //  Options fot the singular value decomposition (SVD) of a real M-by-N matrix
@@ -287,7 +287,7 @@ object svd extends UFunc {
 
         var mp = new Array[(Double,DenseVector[Double])](computed)
 
-        cfor(0)(_ < computed, _ + 1){ i =>
+        cforRange(0 until computed){ i =>
           val eigenVal = d(i)
           if (eigenVal < 0.0) throw new IllegalStateException("encountered negative eigenvalue, " +
             "please make sure your multiplication operators are applied to the same matrix.")

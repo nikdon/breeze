@@ -3,7 +3,7 @@ package breeze.linalg
 import breeze.generic.UFunc
 import org.netlib.util.intW
 import com.github.fommil.netlib.LAPACK.{getInstance=>lapack}
-import spire.implicits.cfor
+import spire.implicits.{cforRange, cforRange2}
 
 
 sealed private[this] trait QRMode
@@ -199,8 +199,8 @@ object qr extends UFunc {
         throw new IllegalArgumentException()
 
       // Upper triangle
-      cfor(0)(_ < mc, _ + 1){ i =>
-        cfor(0)(_ < min(i, A.cols), _ + 1){ j=>
+      cforRange(0 until mc){ i =>
+        cforRange(0 until min(i, A.cols)){ j =>
           A(i, j) = 0.0
         }
       }
@@ -261,8 +261,8 @@ object qr extends UFunc {
         throw new IllegalArgumentException()
 
       // Upper triangle
-      cfor(0)(_ < mc, _ + 1){ i =>
-        cfor(0)(_ < min(i, A.cols), _ + 1){ j=>
+      cforRange(0 until mc){ i =>
+        cforRange(0 until min(i, A.cols)){ j =>
           A(i, j) = 0.0f
         }
       }
@@ -310,10 +310,8 @@ object qrp extends UFunc {
       val pvt = new Array[Int](n)
       val tau = new Array[Double](scala.math.min(m,n))
 
-      cfor(0)(_ < m, _ + 1){ r =>
-        cfor(0)(_ < n, _ + 1){ c =>
-          AFact(r,c) = A(r,c)
-        }
+      cforRange2(0 until m, 0 until n){
+        (r, c) => AFact(r,c) = A(r,c)
       }
 
       lapack.dgeqp3(m, n, AFact.data, m, pvt, tau, workspace, workspace.length, info)
@@ -327,8 +325,8 @@ object qrp extends UFunc {
       //Get R
       val R = DenseMatrix.zeros[Double](m,n)
 
-      cfor(0)(_ < min(n, maxd), _ + 1){ c =>
-        cfor(0)(_ <= min(m, c), _ + 1){ r =>
+      cforRange(0 until min(n, maxd)){ c =>
+        cforRange(0 to min(m, c)){ r =>
           R(r,c) = AFact(r,c)
         }
       }
@@ -337,10 +335,8 @@ object qrp extends UFunc {
       val Q = DenseMatrix.zeros[Double](m,m)
       lapack.dorgqr(m, m, scala.math.min(m,n), AFact.data, m, tau, workspace, workspace.length, info)
 
-      cfor(0)(_ < m, _ + 1){ r =>
-        cfor(0)(_ < min(m, maxd), _ + 1){ c =>
-          Q(r,c) = AFact(r,c)
-        }
+      cforRange2(0 until m, 0 until min(m, maxd)){
+        (r, c) => Q(r,c) = AFact(r,c)
       }
 
       //Error check
@@ -354,7 +350,7 @@ object qrp extends UFunc {
       pvt -= 1
       val P = DenseMatrix.zeros[Int](n,n)
 
-      cfor(0)(_ < n, _ + 1){ i=>
+      cforRange(0 until n){ i =>
         P(pvt(i), i) = 1
       }
 

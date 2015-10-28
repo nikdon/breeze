@@ -1,7 +1,7 @@
 package breeze.linalg
 
 import breeze.generic.UFunc
-import spire.implicits.cfor
+import spire.implicits.cforRange
 
 
 /**
@@ -30,7 +30,7 @@ object logdet extends UFunc {
         var sign = if (numExchangedRows % 2 == 1) -1.0 else 1.0
 
         var acc = 0.0
-        cfor(0)(_ < m.rows, _ + 1){ i =>
+        cforRange(0 until m.rows){ i =>
           val mii = m(i, i)
           if(mii == 0.0) return (0.0, Double.NegativeInfinity)
           acc += math.log(math.abs(mii))

@@ -7,7 +7,7 @@ import breeze.linalg.Options._
 import breeze.stats.{median, mean}
 import scala.reflect.ClassTag
 import breeze.math.Semiring
-import spire.implicits.cfor
+import spire.implicits.{cforRange, cforRange2}
 
 /**
  * @author ktakagaki
@@ -106,10 +106,8 @@ object CanPadRight {
         require( optDim.n1 > 0 && optDim.n2 > 0, "Cannot pad to zero or negative length!")
 
         val tempret = DenseMatrix.zeros[T](optDim.n1, optDim.n2)
-        cfor(0)(_ < min(optDim.n2, m.cols), _ + 1){ c =>
-          cfor(0)(_ < min(optDim.n1, m.rows), _ + 1){ r =>
-            tempret(r, c) = m(r, c)
-          }
+        cforRange2(0 until min(optDim.n2, m.cols), 0 until min(optDim.n1, m.rows)){
+          (c, r) => tempret(r, c) = m(r, c)
         }
         tempret
       }
@@ -216,10 +214,8 @@ object CanPadLeft {
         require( optDim.n1 > 0 && optDim.n2 > 0, "Cannot pad to zero or negative length!")
 
         val tempret = DenseMatrix.zeros[T](optDim.n1, optDim.n2)
-        cfor(1)(_ <= min(optDim.n2, m.cols), _ + 1){ c =>
-          cfor(1)(_ <= min(optDim.n1, m.rows), _ + 1){ r =>
-            tempret(optDim.n1 - r , optDim.n2 - c) = m(m.rows - r, m.cols - c)
-          }
+        cforRange2(1 to min(optDim.n2, m.cols), 1 to min(optDim.n1, m.rows)) {
+          (c, r) => tempret(optDim.n1 - r , optDim.n2 - c) = m(m.rows - r, m.cols - c)
         }
         tempret
       }

@@ -7,7 +7,7 @@ import breeze.linalg.eig.Eig
 import breeze.linalg.eigSym.{DenseEigSym, EigSym}
 import breeze.numerics._
 import breeze.stats.distributions.Rand
-import spire.implicits.cfor
+import spire.implicits.cforRange
 
 
 /**
@@ -89,7 +89,7 @@ object evdr extends UFunc {
                                     nIter: Int): DenseMatrix[Double] = {
     val R = DenseMatrix.rand(M.cols, size, rand = Rand.gaussian)
     val Y = M * R
-    cfor(0)(_ < nIter, _ + 1){ _ =>
+    cforRange(0 until nIter){ _ =>
       Y := M * (M.t * Y)
     }
     val q = qr.reduced.justQ(Y)
