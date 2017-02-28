@@ -1,8 +1,11 @@
-# Breeze [![Build Status](https://travis-ci.org/scalanlp/breeze.png?branch=master)](https://travis-ci.org/scalanlp/breeze)
+# Breeze 
+
+[![Build Status](https://travis-ci.org/scalanlp/breeze.png?branch=master)](https://travis-ci.org/scalanlp/breeze)
+[![Latest version](https://index.scala-lang.org/scalanlp/breeze/breeze/latest.svg)](https://index.scala-lang.org/scalanlp/breeze/breeze/latest.svg)
 
 Breeze is a library for numerical processing. It aims to be generic, clean, and powerful without sacrificing (much) efficiency.
 
-The current snapshot version is 0.13-0598e003cfa7f00f76919aa556009ad6d4fc1332. The latest release is 0.13, which is cross-built against Scala 2.10.x, 2.11.x and 2.12.x.
+The current snapshot version is **0.13-0598e003cfa7f00f76919aa556009ad6d4fc1332**. The latest release is **0.13**, which is cross-built against Scala 2.10.x, 2.11.x and 2.12.x.
 
 
 ## Documentation
@@ -21,7 +24,7 @@ This project can be built with SBT 0.13.x.
 
 ### SBT
 
-For SBT 0.13.x and last stable release 0.13, add these lines to your SBT project definition:
+For SBT 0.13.x and last stable release **0.13**, add these lines to your SBT project definition:
 
 ```scala
 libraryDependencies  ++= Seq(
@@ -43,7 +46,7 @@ libraryDependencies  ++= Seq(
 resolvers += "Sonatype Releases" at "https://oss.sonatype.org/content/repositories/releases/"
 ```
 
-For SBT 0.13.x and last snapshot (currently 0.13-0598e003cfa7f00f76919aa556009ad6d4fc1332-SNAPSHOT), add these lines to your SBT project definition:
+For SBT 0.13.x and last snapshot (currently **0.13-0598e003cfa7f00f76919aa556009ad6d4fc1332-SNAPSHOT**), add these lines to your SBT project definition:
 
 ```scala
 libraryDependencies  ++= Seq(
@@ -75,7 +78,7 @@ Maven looks like this:
 ```xml
 <dependency>
   <groupId>org.scalanlp</groupId>
-  <artifactId>breeze_2.10</artifactId> <!-- or 2.11 -->
+  <artifactId>breeze_2.10</artifactId> <!-- or 2.11, or 2.12 -->
   <version>0.13</version>
 </dependency>
 ```
